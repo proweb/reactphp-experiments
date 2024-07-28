@@ -2,12 +2,15 @@
 declare(strict_types=1);
 
 use React\EventLoop\Loop;
-use React\Http\Message\Response;
+use React\Http\HttpServer;
+use React\Socket\SocketServer;
 use React\Stream\ThroughStream;
+use React\Http\Message\Response;
+use Psr\Http\Message\ServerRequestInterface;
 
 require __DIR__ . '/vendor/autoload.php';
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) {
+$http = new HttpServer(function (ServerRequestInterface $request) {
     if ($request->getMethod() !== 'GET' || $request->getUri()->getPath() !== '/') {
         return new Response(Response::STATUS_NOT_FOUND);
     }
@@ -20,7 +23,7 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     });
 
     // end stream after a few seconds
-    $timeout = Loop::addTimer(15.0, function() use ($stream, $timer) {
+    $timeout = Loop::addTimer(15.0, function () use ($stream, $timer) {
         Loop::cancelTimer($timer);
         $stream->end();
     });
@@ -40,7 +43,7 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     );
 });
 
-$socket = new React\Socket\SocketServer($argv[1] ?? '0.0.0.0:8000');
+$socket = new SocketServer($argv[1] ?? '0.0.0.0:8000');
 $http->listen($socket);
 
 echo 'Listening on ' . str_replace('tcp:', 'http:', $socket->getAddress()) . PHP_EOL;
