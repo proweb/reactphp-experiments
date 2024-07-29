@@ -1,0 +1,24 @@
+{
+    "name": "vyatka/reactphp-decoder",
+    "description": "Decoder for WIN-1251 server response",
+    "type": "project",
+    "require": {
+        "react/event-loop": "^1.5",
+        "react/http": "^1.10",
+        "react/promise": "^3.2",
+        "react/async": "^4.3"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Vyatka\\ReactphpDecoder\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergey Mochalov",
+            "email": "proweb@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
