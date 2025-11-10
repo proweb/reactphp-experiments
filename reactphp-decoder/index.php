@@ -1,9 +1,5 @@
 <?php declare(strict_types=1);
 
-
-
-
-
 use React\EventLoop\Loop;
 use React\Http\HttpServer;
 use React\Socket\SocketServer;
@@ -21,10 +17,10 @@ $http = new HttpServer(function (ServerRequestInterface $request) {
     $method = $request->getMethod();
     $urlQueryParams = $request->getQueryParams();
     $url = $urlQueryParams['url'];
-    if($urlQueryParams['url']):
-    return Response::plaintext($url);
+    if ($urlQueryParams['url']):
+        return Response::plaintext($url);
     else:
-    return Response::plaintext("Неверный формат запроса")->withStatus(403);
+        return Response::plaintext("Неверный формат запроса")->withStatus(403);
     endif;
 });
 
